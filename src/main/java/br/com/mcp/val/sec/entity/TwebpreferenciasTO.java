@@ -35,7 +35,7 @@ import org.eclipse.persistence.annotations.OptimisticLockingType;
  * Copyright (c) 2021 CIFARMA - Todos os direitos reservados.
  *
  * @author marcelocaser
- * @version Revision: $$ Date: 25/09/2021
+ * @version Revision: $$ Date: 08/10/2021
  */
 @Entity
 @EntityListeners(AuditListener.class)
@@ -166,16 +166,21 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
     @Column(name = "PORTA_PROXY", length = 4)
     private String portaProxy;
     @Lob
-    @Column(name = "MICRO_SERVICOS")
-    private String microServicos;
+    @Column(name = "NAO_USAR_SERVIDOR_PROXY")
+    private String naoUsarServidorProxy;
     @Basic(optional = false)
     @NotNull
     @Column(name = "LICENCA_VALIDA_ATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date licencaValidaAte;
-    @Size(max = 70)
-    @Column(name = "LICENCA_HASH_CODE", length = 70)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 70)
+    @Column(name = "LICENCA_HASH_CODE", nullable = false, length = 70)
     private String licencaHashCode;
+    @Lob
+    @Column(name = "MICRO_SERVICOS")
+    private String microServicos;
     @Version
     @Basic(optional = false)
     @NotNull
@@ -199,9 +204,10 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
         this.id = id;
     }
 
-    public TwebpreferenciasTO(Integer id, Date licencaValidaAte, Long version) {
+    public TwebpreferenciasTO(Integer id, Date licencaValidaAte, String licencaHashCode, Long version) {
         this.id = id;
         this.licencaValidaAte = licencaValidaAte;
+        this.licencaHashCode = licencaHashCode;
         this.version = version;
     }
 
@@ -525,12 +531,12 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
         this.portaProxy = portaProxy;
     }
 
-    public String getMicroServicos() {
-        return microServicos;
+    public String getNaoUsarServidorProxy() {
+        return naoUsarServidorProxy;
     }
 
-    public void setMicroServicos(String microServicos) {
-        this.microServicos = microServicos;
+    public void setNaoUsarServidorProxy(String naoUsarServidorProxy) {
+        this.naoUsarServidorProxy = naoUsarServidorProxy;
     }
 
     public Date getLicencaValidaAte() {
@@ -547,6 +553,14 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
 
     public void setLicencaHashCode(String licencaHashCode) {
         this.licencaHashCode = licencaHashCode;
+    }
+
+    public String getMicroServicos() {
+        return microServicos;
+    }
+
+    public void setMicroServicos(String microServicos) {
+        this.microServicos = microServicos;
     }
 
     public Long getVersion() {
@@ -579,7 +593,7 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
 
     @Override
     public String toString() {
-        return "mcp.val.sec.entity.TwebpreferenciasTO[ id=" + id + " ]";
+        return "br.com.mcp.val.sec.entity.TwebpreferenciasTO_1[ id=" + id + " ]";
     }
 
 }
