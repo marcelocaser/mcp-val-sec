@@ -21,6 +21,7 @@ import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferenci
 import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias.TwebpreferenciasScheduler;
 import br.com.mcp.val.sec.entity.TwebpreferenciasTO;
 import br.com.mcp.val.sec.entity.persistence.TwebpreferenciasPO;
+import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,16 @@ public class TwebpreferenciasBO implements Twebpreferencias {
     @Override
     public TwebpreferenciasTO alterar(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException {
         antesDeAlterar(twebpreferenciasTO);
+        return this.persistencia.alterar(twebpreferenciasTO);
+    }
+
+    @Override
+    public TwebpreferenciasTO alterar(TwebpreferenciasTO twebpreferenciasTO, List<String> naoUsarServidorProxy) throws NegocioException {
+        antesDeAlterar(twebpreferenciasTO);
+        if (naoUsarServidorProxy != null
+                && !naoUsarServidorProxy.isEmpty()) {
+            twebpreferenciasTO.setNaoUsarServidorProxy(String.join("|", naoUsarServidorProxy));
+        }
         return this.persistencia.alterar(twebpreferenciasTO);
     }
 
@@ -105,6 +116,16 @@ public class TwebpreferenciasBO implements Twebpreferencias {
     @Override
     public void incluir(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException {
         antesDeIncluir(twebpreferenciasTO);
+        this.persistencia.incluir(twebpreferenciasTO);
+    }
+
+    @Override
+    public void incluir(TwebpreferenciasTO twebpreferenciasTO, List<String> naoUsarServidorProxy) throws NegocioException {
+        antesDeIncluir(twebpreferenciasTO);
+        if (naoUsarServidorProxy != null
+                && !naoUsarServidorProxy.isEmpty()) {
+            twebpreferenciasTO.setNaoUsarServidorProxy(String.join("|", naoUsarServidorProxy));
+        }
         this.persistencia.incluir(twebpreferenciasTO);
     }
 

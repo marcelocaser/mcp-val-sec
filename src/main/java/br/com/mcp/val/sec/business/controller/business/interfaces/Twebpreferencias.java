@@ -203,6 +203,8 @@ public interface Twebpreferencias {
 
     public TwebpreferenciasTO alterar(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException;
 
+    public TwebpreferenciasTO alterar(TwebpreferenciasTO twebpreferenciasTO, List<String> naoUsarServidorProxy) throws NegocioException;
+
     public TwebpreferenciasTO consultar(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException;
 
     public LocalDateTime consultarDataAtual() throws NegocioException;
@@ -210,6 +212,8 @@ public interface Twebpreferencias {
     public void excluir(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException;
 
     public void incluir(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException;
+
+    public void incluir(TwebpreferenciasTO twebpreferenciasTO, List<String> naoUsarServidorProxy) throws NegocioException;
 
     public List<TwebpreferenciasTO> listar(TwebpreferenciasTO twebpreferenciasTO);
 

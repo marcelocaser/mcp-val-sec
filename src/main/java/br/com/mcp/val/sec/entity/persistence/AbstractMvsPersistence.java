@@ -76,7 +76,7 @@ public abstract class AbstractMvsPersistence<E extends Serializable, I> extends 
     public LocalDateTime getLocalDateTimeToOracle() throws NegocioException {
         return super.getLocalDateTimeToOracle(entityManager); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public int truncate(E entity) {
         return super.truncate(entityManager, entity);
     }
