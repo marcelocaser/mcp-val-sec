@@ -21,8 +21,7 @@ import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferenci
 import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias.TwebpreferenciasScheduler;
 import br.com.mcp.val.sec.entity.TwebpreferenciasTO;
 import br.com.mcp.val.sec.entity.persistence.TwebpreferenciasPO;
-import java.util.Arrays;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 
 /**
