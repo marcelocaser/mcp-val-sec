@@ -9,6 +9,11 @@ import br.com.core.util.ManifestUtil;
 import br.com.core.util.NumberUtil;
 import br.com.core.util.ObjectUtil;
 import br.com.core.util.ServiceUtil;
+import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias;
+import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias.TwebpreferenciasAmbiente;
+import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias.TwebpreferenciasScheduler;
+import br.com.mcp.val.sec.entity.TwebpreferenciasTO;
+import br.com.mcp.val.sec.entity.persistence.TwebpreferenciasPO;
 import com.core.spring.boot.EncrytedUtils;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -16,11 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
-import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias;
-import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias.TwebpreferenciasAmbiente;
-import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias.TwebpreferenciasScheduler;
-import br.com.mcp.val.sec.entity.TwebpreferenciasTO;
-import br.com.mcp.val.sec.entity.persistence.TwebpreferenciasPO;
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 
@@ -96,7 +96,7 @@ public class TwebpreferenciasBO implements Twebpreferencias {
             preferencias.setCorreiosSenhaLr(CriptografiaUtil.decryptBase64(preferencias.getCorreiosSenhaLr()));
         }
         if (!validarLicenca(preferencias)) {
-            throw new NegocioException("lincecaNaoMaisValidaOuExpirada");
+            throw new NegocioException("licencaNaoMaisValidaOuExpirada");
         }
         return preferencias;
     }
