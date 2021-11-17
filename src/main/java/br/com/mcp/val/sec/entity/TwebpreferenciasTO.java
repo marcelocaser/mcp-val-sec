@@ -29,13 +29,13 @@ import org.eclipse.persistence.annotations.OptimisticLockingType;
  * <b>Descrição:</b>     <br>
  *
  * <b>Projeto:</b> mcp-val-sec <br>
- * <b>Pacote:</b> mcp.val.sec.entity <br>
+ * <b>Pacote:</b> br.com.mcp.val.sec.entity <br>
  * <b>Empresa:</b> Cifarma - Científica Farmacêutica LTDA. <br>
  *
  * Copyright (c) 2021 CIFARMA - Todos os direitos reservados.
  *
  * @author marcelocaser
- * @version Revision: $$ Date: 08/10/2021
+ * @version Revision: $$ Date: 05/11/2021
  */
 @Entity
 @EntityListeners(AuditListener.class)
@@ -93,8 +93,8 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
     @Size(max = 15)
     @Column(name = "CORREIOS_ID_LR", length = 15)
     private String correiosIdLr;
-    @Size(max = 15)
-    @Column(name = "CORREIOS_SENHA_LR", length = 15)
+    @Size(max = 50)
+    @Column(name = "CORREIOS_SENHA_LR", length = 50)
     private String correiosSenhaLr;
     @Size(max = 100)
     @Column(name = "CORREIOS_URL_LR", length = 100)
@@ -102,8 +102,8 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
     @Size(max = 60)
     @Column(name = "CORREIOS_USUARIO_WS", length = 60)
     private String correiosUsuarioWs;
-    @Size(max = 15)
-    @Column(name = "CORREIOS_SENHA_WS", length = 15)
+    @Size(max = 50)
+    @Column(name = "CORREIOS_SENHA_WS", length = 50)
     private String correiosSenhaWs;
     @Size(max = 100)
     @Column(name = "CORREIOS_URL_WS", length = 100)
@@ -593,7 +593,7 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
 
     @Override
     public String toString() {
-        return "br.com.mcp.val.sec.entity.TwebpreferenciasTO_1[ id=" + id + " ]";
+        return "br.com.mcp.val.sec.entity.TwebpreferenciasTO[ id=" + id + " ]";
     }
 
 }
