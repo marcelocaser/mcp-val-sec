@@ -1,10 +1,11 @@
 package br.com.mcp.val.sec.business.controller.business;
 
 import br.com.core.exception.NegocioException;
-import br.com.core.message.MensagemLista;
+import br.com.core.message.MessageList;
 import br.com.core.resource.ResourceServiceUtil;
 import br.com.core.util.CriptografiaUtil;
 import br.com.core.util.DateUtil;
+import br.com.core.util.EncrytedUtils;
 import br.com.core.util.ManifestUtil;
 import br.com.core.util.NumberUtil;
 import br.com.core.util.ObjectUtil;
@@ -14,15 +15,15 @@ import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferenci
 import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias.TwebpreferenciasScheduler;
 import br.com.mcp.val.sec.entity.TwebpreferenciasTO;
 import br.com.mcp.val.sec.entity.persistence.TwebpreferenciasPO;
-import com.core.spring.boot.EncrytedUtils;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * <b>Classe:</b> TwebpreferenciasBO <br>
@@ -37,14 +38,13 @@ import org.springframework.stereotype.Service;
  * @author marce
  * @version Revision: $$ Date: 05/06/2017
  */
-@Service
+@Named
+@ApplicationScoped
 public class TwebpreferenciasBO implements Twebpreferencias {
 
-    @Autowired
+    @Inject
     TwebpreferenciasPO persistencia;
 
-    /*@Autowired
-    Twebsrvprocess serviceProcessNegocio;*/
     @Override
     public TwebpreferenciasTO alterar(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException {
         antesDeAlterar(twebpreferenciasTO);
@@ -189,7 +189,7 @@ public class TwebpreferenciasBO implements Twebpreferencias {
 
     @Override
     public TwebpreferenciasTO validarAcesso(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException {
-        MensagemLista mensagemLista = new MensagemLista();
+        MessageList mensagemLista = new MessageList();
         if (twebpreferenciasTO == null) {
             throw new NegocioException("preferenciasSistemaNaoConfigurada");
         }
@@ -200,7 +200,7 @@ public class TwebpreferenciasBO implements Twebpreferencias {
             throw new NegocioException("ambienteDoSistemaNaoInformada");
         }
         if (!twebpreferenciasTO.getAmbiente().equals(TwebpreferenciasAmbiente.HOMOLOGACAO.getAmbiente()) && !ManifestUtil.getImplementationVersionWithBuildDate().equals(twebpreferenciasTO.getVersaoAtual())) {
-            mensagemLista.addMensagem("versaoAtualDoSistemaNaoConfereAplicacao", new String[]{twebpreferenciasTO.getVersaoAtual(), ManifestUtil.getImplementationVersionWithBuildDate()});
+            mensagemLista.addMessage("versaoAtualDoSistemaNaoConfereAplicacao", new String[]{twebpreferenciasTO.getVersaoAtual(), ManifestUtil.getImplementationVersionWithBuildDate()});
             throw new NegocioException(mensagemLista);
         }
         return twebpreferenciasTO;

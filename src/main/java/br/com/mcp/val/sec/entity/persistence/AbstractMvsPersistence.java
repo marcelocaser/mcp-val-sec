@@ -2,13 +2,13 @@ package br.com.mcp.val.sec.entity.persistence;
 
 import br.com.core.exception.NegocioException;
 import br.com.core.persistence.OraclePersistence;
+import br.com.core.persistence.OrderBy;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.Order;
 
 /**
  * <b>Classe:</b> AbstractMvsPersistence <br>
@@ -25,7 +25,7 @@ import javax.persistence.criteria.Order;
  */
 public abstract class AbstractMvsPersistence<E extends Serializable, I> extends OraclePersistence<E, I> {
 
-    @PersistenceContext(unitName = "intranet")
+    @PersistenceContext(unitName = "mvs")
     private EntityManager entityManager;
 
     public void create(E entity) throws NegocioException {
@@ -60,7 +60,7 @@ public abstract class AbstractMvsPersistence<E extends Serializable, I> extends 
         return super.list(entityManager, entity); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List<E> list(E entity, List<Order> order, int maxResult) {
+    public List<E> list(E entity, List<OrderBy> order, int maxResult) {
         return super.list(entityManager, entity, order, maxResult); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -3,8 +3,8 @@ package br.com.mcp.val.sec.entity.persistence;
 import br.com.core.exception.NegocioException;
 import br.com.mcp.val.sec.entity.TwebpreferenciasTO;
 import java.util.List;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import javax.inject.Singleton;
+import javax.transaction.Transactional;
 
 /**
  * <b>Classe:</b> TwebpreferenciasPO <br>
@@ -19,14 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
  * @author marcelocaser
  * @version Revision: $$ Date: 24/09/2021
  */
-@Repository
+@Singleton
 public class TwebpreferenciasPO extends AbstractMvsPersistence<TwebpreferenciasTO, Object> {
 
     public TwebpreferenciasPO() {
         setClazz(TwebpreferenciasTO.class);
     }
 
-    @Transactional(transactionManager = "transactionManager")
+    @Transactional
     public TwebpreferenciasTO alterar(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException {
         return update(twebpreferenciasTO);
     }
@@ -35,12 +35,12 @@ public class TwebpreferenciasPO extends AbstractMvsPersistence<TwebpreferenciasT
         return find(twebpreferenciasTO);
     }
 
-    @Transactional(transactionManager = "transactionManager")
+    @Transactional
     public void excluir(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException {
         delete(twebpreferenciasTO);
     }
 
-    @Transactional(transactionManager = "transactionManager")
+    @Transactional
     public void incluir(TwebpreferenciasTO twebpreferenciasTO) throws NegocioException {
         create(twebpreferenciasTO);
     }
