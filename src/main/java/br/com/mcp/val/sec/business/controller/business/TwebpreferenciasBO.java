@@ -6,7 +6,6 @@ import br.com.core.resource.ResourceServiceUtil;
 import br.com.core.util.CriptografiaUtil;
 import br.com.core.util.DateUtil;
 import br.com.core.util.ManifestUtil;
-import br.com.core.util.NumberUtil;
 import br.com.core.util.ObjectUtil;
 import br.com.core.util.ServiceUtil;
 import br.com.mcp.val.sec.business.controller.business.interfaces.Twebpreferencias;
@@ -17,6 +16,7 @@ import br.com.mcp.val.sec.entity.persistence.TwebpreferenciasPO;
 import com.core.spring.boot.EncrytedUtils;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -219,32 +219,13 @@ public class TwebpreferenciasBO implements Twebpreferencias {
             return dataEHora;
         }
 
-        int servidorAplicacaoDia = servidorAplicacao.getDayOfMonth();
-        int servidorAplicacaoMes = servidorAplicacao.getMonthValue();
-        int servidorAplicacaoAno = servidorAplicacao.getYear();
-        int servidorAplicacaoHora = servidorAplicacao.getHour();
-        int servidorAplicacaoMinuto = servidorAplicacao.getMinute();
-
-        int servidorBancoDeDadosDia = servidorBancoDeDados.getDayOfMonth();
-        int servidorBancoDeDadosMes = servidorBancoDeDados.getMonthValue();
-        int servidorBancoDeDadosAno = servidorBancoDeDados.getYear();
-        int servidorBancoDeDadosHora = servidorBancoDeDados.getHour();
-        int servidorBancoDeDadosMinuto = servidorBancoDeDados.getMinute();
-
-        int intervalo[] = verificaMargemDeErroAceita(servidorAplicacaoMinuto, servidorBancoDeDadosMinuto);
+        long minutos = ChronoUnit.MINUTES.between(servidorAplicacao, servidorBancoDeDados);
+        minutos = minutos < 0 ? minutos * (-1) : minutos;
 
         dataEHora.put("dataHoraServidorAplicacao", servidorAplicacao);
         dataEHora.put("dataHoraServidorBancoDeDados", servidorBancoDeDados);
-        dataEHora.put("valida", false);
+        dataEHora.put("valida", minutos <= 2 /*dois minutos de tolerancia*/);
 
-        if (servidorAplicacaoDia == servidorBancoDeDadosDia
-                && servidorAplicacaoMes == servidorBancoDeDadosMes
-                && servidorAplicacaoAno == servidorBancoDeDadosAno
-                && servidorAplicacaoHora == servidorBancoDeDadosHora
-                && NumberUtil.between(servidorAplicacaoMinuto, intervalo[0], intervalo[1])
-                && NumberUtil.between(servidorBancoDeDadosMinuto, intervalo[0], intervalo[1])) {
-            dataEHora.put("valida", true);
-        }
         return dataEHora;
     }
 
@@ -262,31 +243,6 @@ public class TwebpreferenciasBO implements Twebpreferencias {
             return servidorBancoDeDados.isBefore(horaExpiracao);
         }
         return false;
-    }
-
-    /**
-     * Valida se os minutos estao com atraso/adiantado em ate 2 minutos
-     *
-     * @param minutoUm - Primeiro minuto no internvalo de 0-59 a ser valiado;
-     * @param minutoDois - Segundo minuto no intervalo de 0-59 a ser validado;
-     *
-     * @return Array com o intervalo minimo/maximo em minutos permitido de
-     * atraso/adiantado
-     */
-    private int[] verificaMargemDeErroAceita(int minutoUm, int minutoDois) {
-        int minutoMaximoPermitido = 0;
-        if (minutoUm > minutoDois) {
-            minutoMaximoPermitido = minutoDois;
-        } else {
-            minutoMaximoPermitido = minutoUm;
-        }
-        int numeroMaximo = minutoMaximoPermitido + 2;
-        int numeroMinimo = minutoMaximoPermitido - 2;
-        if (numeroMinimo < 0) {
-            numeroMinimo = 0;
-        }
-        int intervalo[] = {numeroMinimo, numeroMaximo};
-        return intervalo;
     }
 
 }
