@@ -30,17 +30,17 @@ public class Audit implements Serializable {
     @Size(min = 1, max = 60)
     @Column(name = "INCLUIDO_POR", nullable = false, length = 60)
     private String incluidoPor;
-    @Column(name = "INCLUIDO_EM")
+    @Column(name = "INCLUIDO_EM"/*, columnDefinition = "datetime2"*/)
     private LocalDateTime incluidoEm;
     @Size(max = 60)
     @Column(name = "ALTERADO_POR", length = 60)
     private String alteradoPor;
-    @Column(name = "ALTERADO_EM")
+    @Column(name = "ALTERADO_EM"/*, columnDefinition = "datetime2"*/)
     private LocalDateTime alteradoEm;
     @Size(max = 60)
     @Column(name = "EXCLUIDO_POR", length = 60)
     private String excluidoPor;
-    @Column(name = "EXCLUIDO_EM")
+    @Column(name = "EXCLUIDO_EM"/*, columnDefinition = "datetime2"*/)
     private LocalDateTime excluidoEm;
 
     public static Audit getInstance() {
