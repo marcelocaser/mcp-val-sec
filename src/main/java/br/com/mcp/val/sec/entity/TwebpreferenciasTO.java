@@ -32,10 +32,10 @@ import org.eclipse.persistence.annotations.OptimisticLockingType;
  * <b>Pacote:</b> br.com.mcp.val.sec.entity <br>
  * <b>Empresa:</b> Cifarma - Científica Farmacêutica LTDA. <br>
  *
- * Copyright (c) 2021 CIFARMA - Todos os direitos reservados.
+ * Copyright (c) 2022 CIFARMA - Todos os direitos reservados.
  *
  * @author marcelocaser
- * @version Revision: $$ Date: 05/11/2021
+ * @version Revision: $$ Date: 29/06/2022
  */
 @Entity
 @EntityListeners(AuditListener.class)
@@ -181,6 +181,11 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
     @Lob
     @Column(name = "MICRO_SERVICOS")
     private String microServicos;
+    @Column(name = "HABILITA_VIRUS_SCAN")
+    private Character habilitaVirusScan;
+    @Size(max = 60)
+    @Column(name = "IMPRESSORA_NFE", length = 60)
+    private String impressoraNfe;
     @Version
     @Basic(optional = false)
     @NotNull
@@ -561,6 +566,22 @@ public class TwebpreferenciasTO implements Serializable, Auditable {
 
     public void setMicroServicos(String microServicos) {
         this.microServicos = microServicos;
+    }
+
+    public Character getHabilitaVirusScan() {
+        return habilitaVirusScan;
+    }
+
+    public void setHabilitaVirusScan(Character habilitaVirusScan) {
+        this.habilitaVirusScan = habilitaVirusScan;
+    }
+
+    public String getImpressoraNfe() {
+        return impressoraNfe;
+    }
+
+    public void setImpressoraNfe(String impressoraNfe) {
+        this.impressoraNfe = impressoraNfe;
     }
 
     public Long getVersion() {
